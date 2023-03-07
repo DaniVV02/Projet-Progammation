@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Erreur{% endblock %}
+{% block content %}
+        <!-- a welcome message with a default value in jinja and a field to input the question id to access that question and a submit-->
+        <h1>Bienvenue</h1>
+        <form action="/question" method="post">
+            <label for="question_id">Saisissez le code de la question</label>
+            <input type="text" id="question_id" name="question_id" required>
+            <input type="submit" value="Accéder à la question" class="form-button">
+        </form>
+{% endblock %}

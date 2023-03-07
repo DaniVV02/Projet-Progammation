@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Erreur{% endblock %}
+{% block content %}
+        <!-- a message for the user to show that he is not in this class and a button to return to index -->
+        <h1>
+            {{ message }}
+        </h1>
+        <a href="/"><button>Retour</button></a>
+{% endblock %}
