@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+     integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" 
+     crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="{{ url_for('static', filename='deco.css') }}">
+  </head>
+<body>
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+button[type="submit"] {
+  margin-top: 10px;
+}
+
+#connected {
+  margin-bottom: 10px;
+}
+
+#results {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+    </style>
+    <h1>Quiz</h1>
+    <form id="quiz-form">
+        <p>Question 1: What is 2+2?</p>
+        <label><input type="checkbox" id="switch" name="option" value="1">0</label><br>
+        <label><input type="checkbox" id="switch" name="option" value="2">2</label><br>
+        <label><input type="checkbox" id="switch" name="option" value="3">22</label><br>
+        <label><input type="checkbox" id="switch" name="option" value="4">4</label><br>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="connected">Connected: 0</p>
+    <p id="answer-count"></p>
+    <p id="results">Results:</p>
+
+    <script>
+      var socket = io();
+      var connected = document.getElementById('connected');
+      var results = document.getElementById('results');
+      var quizForm = document.getElementById('quiz-form');
+    
+      socket.on('connect', function() {
+        console.log('Connected');
+        socket.emit('connected');
+      });
+    
+      socket.on('disconnect', function() {
+        console.log('Disconnected');
+      });
+    
+      socket.on('connected_users', function(count) {
+        console.log('Connected users:', count);
+        connected.textContent = 'Connected: ' + count;
+      });
+    
+      socket.on('quiz_results', function(resultsData) {
+        console.log('Quiz results:', resultsData);
+        var html = '';
+        var options = quizForm.elements['option'];
+        for (var i = 0; i < options.length; i++) {
+          var option = options[i];
+          var answer = option.value;
+          var count = resultsData[answer] || 0;
+          html += '<p>' + 'Option ' + answer + ': ' + count + '</p>';
+        }
+        results.innerHTML = '<h2>Results:</h2>' + html;
+        updateAnswerCount(Object.values(resultsData).reduce((acc, val) => acc + val, 0));
+      });
+    
+      quizForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        var selectedOption = quizForm.querySelector('input[name="option"]:checked');
+        if (selectedOption) {
+          var answer = selectedOption.value;
+          quizForm.reset();
+          socket.emit('quiz_answer', answer);
+        }
+      });
+
+      function updateAnswerCount(count) {
+        var answerCount = document.getElementById('answer-count');
+        answerCount.textContent = count + ' reponses';
+      }
+
+    </script>
+    
+</body>
+</html>
