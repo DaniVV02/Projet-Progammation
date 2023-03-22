@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Question</title>
+</head>
+<body>
+	<h1>Question</h1>
+	<p>{{ question }}</p>
+	<p>Identifiant de la question: {{ question_id }}</p>
+	<form method="POST" action="{{ url_for('answer') }}">
+		<input type="hidden" name="question_id" value="{{ question_id }}">
+		<label for="answer">Réponse:</label>
+		<input type="text" name="answer" id="answer">
+		<input type="submit" value="Envoyer">
+	</form>
+</body>
+</html>
