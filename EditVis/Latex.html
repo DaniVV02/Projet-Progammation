@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dynamic Preview of Textarea with MathJax Content</title>
+<!-- Copyright (c) 2012-2020 The MathJax Consortium -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+  });
+</script>
+<script type="text/javascript" src="https://www.tuhh.de/MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+<script>
+var Preview = {
+  delay: 150,        // delay après qu'on tape avant l'actualiser 
+
+  preview: null,     // rempli par Init juste en bas
+  buffer: null,      // rempli par Init juste en bas
+
+  timeout: null,     // stocke setTimout id
+  mjRunning: false,  // true quand MathJax est en train de procésser
+  mjPending: false,  // true quand un typeset a été mis dans la queue
+  oldText: null,     // utilisé pour vérifier si un update est nécessaire
+
+  //  Get the preview and buffer DIV's
+  Init: function () {
+    this.preview = document.getElementById("MathPreview");
+    this.buffer = document.getElementById("MathBuffer");
+  },
+
+
+  //  Switch le buffer et preview, et affiche le correcte
+    SwapBuffers: function () {
+    var buffer = this.preview, preview = this.buffer;
+    this.buffer = buffer; this.preview = preview;
+    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";    //  On utilise visibility:hidden au lieu de display:none car
+    preview.style.position = ""; preview.style.visibility = "";   //  comme ca les résultats de MathJax sont plus précis de cette manière
+  },
+
+  //  Cette fonction est appelé quand une lettre est tapée dans le textarea.
+  //  On vérifie s'il y a déjà un pending update et on le vide si c'est le cas
+
+  //  On place un update qui va se produire après un petit délay (comme ca si plus de lettres sont tapées 
+  //  le update va pas se produire jusqu'à qu'il y ait une pause lorsqu'on tape
+  //  La fonction callback est placée en bas, après que l'objet Preview est créé
+  
+  Update: function () {
+    if (this.timeout) {
+        clearTimeout(this.timeout)
+    }
+    this.timeout = setTimeout(this.callback,this.delay);
+  },
+
+  //  Crée le preview et éxécute MathJax dedans
+  
+  CreatePreview: function () {
+    Preview.timeout = null;
+    if (this.mjPending) return;  //  Si MathJax est déjà en trainn de rendre le code alors return
+    var text = document.getElementById("MathInput").value;
+    if (text === this.oldtext) return; //  Si le texte n'a pas changé alors return
+    if (this.mjRunning) {         //  Sinon, indique que MathJax est en train de s'éxécuter, et démarre le typesetting 
+      this.mjPending = true;
+      MathJax.Hub.Queue(["CreatePreview",this]);
+    } else {
+      this.buffer.innerHTML = this.oldtext = text;
+      this.mjRunning = true;
+      MathJax.Hub.Queue(       //Après que cela a été fait, il fait un call sur PreviewDone
+	["Typeset",MathJax.Hub,this.buffer],
+	["PreviewDone",this]
+      );
+    }
+  },
+
+  //  Indique que MathJax n'est plus en train de s'éxécuter
+  //  et swap les buffers pour montrer les résultats
+  //  
+  PreviewDone: function () {
+    this.mjRunning = this.mjPending = false;
+    this.SwapBuffers();
+  }
+
+};
+
+//  met en mémoire un callback à l'action CreatePreview 
+Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
+Preview.callback.autoReset = true;  // on s'assure qu'il s'éxécute plus d'une fois
+
+</script>
+</head>
+<body>
+
+<p> Écrivez votre formule mathématique :</p>
+
+<textarea id="MathInput" cols="40" rows="8" style="margin-top:5px">
+</textarea>
+<input type="button" id="MathInput" onclick="Preview.Update()" value="Convertir"> 
+
+
+<p>Visualisation :</p>
+<div id="MathPreview" style="border:1px solid; padding: 3px; width:50%; margin-top:5px"></div>
+<div id="MathBuffer" style="border:1px solid; padding: 3px; width:50%; margin-top:5px; 
+visibility:hidden; position:absolute; top:0; left: 0"></div>
+
+<script>
+Preview.Init();
+</script>
+
+</body>
+</html>
