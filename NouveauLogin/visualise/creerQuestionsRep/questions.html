@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="deco2.css">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="/add">
+        <label for="question">Enter question:</label>
+    <input type="text" id="question" name="question">
+    <br>
+    <br>
+    <label for="options">Enter options:</label>
+    <div id="options">
+        <input type="text" name="option1">
+        <input type="radio" name="rep_correcte" value="1">
+        <br>
+        <input type="text" name="option2">
+        <input type="radio" name="rep_correcte" value="2">
+        <br>
+        <input type="text" name="option3">
+        <input type="radio" name="rep_correcte" value="3">
+        <br>
+        <input type="text" name="option4">
+        <input type="radio" name="rep_correcte" value="4">
+    </div>
+    <br>
+    <input type="button" value="Add question" onclick="success1()" id="ajouter">
+    <script> 
+        function success1(){
+            alert("Question ajoutée")
+        }   
+        </script> 
+    </form>
+    
+    <form method="POST" action="/erase">
+        <label for="index">Enter index of question to erase:</label>
+        <input type="text" id="index" name="index">
+        <input type="submit" id="effacer" onclick="success2()" value="Erase question">
+    </form>
+    
+    <script> 
+        function success2(){
+            alert("Question effacée")
+        }    
+    </script>    
+
+    <form method="POST" action="/save">
+        <label for="file_name">Enter file name to save questions:</label>
+        <input type="text" id="file_name" name="file_name">
+        <input type="submit" value="Save questions" onclick="success3()">
+    </form>
+
+    <script> 
+        function success3(){
+            alert("Fichier de questions sauvegardée ! ")
+        }
+    </script>    
+</body>
+</html>

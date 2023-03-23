@@ -1,0 +1,107 @@
+
+<!--ce fivhier contient les fonctions mermaid/markdown/latex/highlight en ecrivant le text sur le html-->
+
+<!DOCTYPE html>
+	<html lang="en">	
+	<head>
+		<title>Markdown-to-HTML Sample</title>
+		<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+        <script type="text/javascript" src="test.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <!-- Obtain Markdown.Converter.js from http://code.google.com/p/pagedown/ -->
+<script src="Markdown.Converter.js"></script>
+	</head>
+	<body >
+		<div data-markdown>
+## titre H2
+### sous titre H3
+**en gras**, *en italique*...
+#Hello
+sdf
+## sdfsdfdf
+		</div>
+        <script>
+            window.onload=function(){
+                // this function is the reverse version of escapeHTML found at 
+                // https://github.com/evilstreak/markdown-js/blob/master/src/render_tree.js
+                function unescapeHTML( text ) {
+                    return text.replace( /&amp;/g, "&" )
+                               .replace( /&lt;/g, "<" )
+                               .replace( /&gt;/g, ">" )
+                               .replace( /&quot;/g, "\"" )
+                               .replace( /&#39;/g, "'" );
+                  }
+                // based on https://gist.github.com/paulirish/1343518
+                (function(){
+                  [].forEach.call( document.querySelectorAll('[data-markdown]'), function fn(elem){
+                    elem.innerHTML = (new Showdown.converter()).makeHtml(unescapeHTML(elem.innerHTML));
+                  });
+                }());
+              }
+            $(document).ready(function() {
+                $("#status").html("<p>Loading page content...</p>");
+        
+                // Load the Markdown file and convert it to HTML for display
+                var markdownURL = "mycontent.markdown";
+                $.get(markdownURL, function(markdownContent) {
+                    var converter = new Markdown.Converter();
+                    var htmlContent = converter.makeHtml(markdownContent);
+                    $("div#content").html(htmlContent);
+                });
+            });
+        </script>
+        
+		
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+            
+        <script>
+            MathJax = {
+                tex: {inlineMath: [['$', '$']]}
+              };
+        </script>  
+
+        voici une equation:
+        ${e^{i\pi}+1=0}$
+
+
+        <pre class="mermaid">
+            graph LR
+                A --- B
+                B-->C[fa:fa-ban forbidden]
+                B-->D(fa:fa-spinner);
+              </pre>
+              <script type="module">
+                import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+                mermaid.initialize({ startOnLoad: true });
+              </script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/atom-one-light.min.css" integrity="sha512-o5v54Kh5PH0dgnf9ei0L+vMRsbm5fvIvnR/XkrZZjN4mqdaeH7PW66tumBoQVIaKNVrLCZiBEfHzRY4JJSMK/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<pre>
+    <code>
+        #include <iostream>
+
+            class complex {
+              double re, im;
+            public:
+              complex(double r,double i)
+              {
+                re=r;
+                im=i;
+              }// construit un complexe à partir de deux scalaires
+              complex(double r)
+              {
+                re=r;
+                im=0;
+              }
+              complex()
+
+            
+        
+    </code>
+</pre>
+<script>hljs.initHighlightingOnLoad();</script>
+	</body>
+</html>             

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Question Editor and Visualizer</title>
+    <style>
+        .form-check-input{
+    --s:20px; /* ajuste la taille*/
+    height: calc(var(--s) + var(--s)/5);
+    width: auto;
+    aspect-ratio: 2.25;
+    border-radius: var(--s);
+    margin: calc(var(--s)/2);
+    display:grid;
+    float: left;
+    cursor:pointer;
+    background-color: #ff7a7a;
+    box-sizing: content-box;
+    overflow: hidden;
+    transition: .3s .1s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+.form-check-input:before{
+    content:"";
+    padding: calc(var(--s)/10);
+    --_g:radial-gradient(circle
+     closest-side at calc(100% - var(--s)/2) 50%,
+     #000 96%, #0000);
+     background: 
+     var(--_g) 0 /var(--_p,var(--s))
+     100% no-repeat content-box,
+     var(--_g) var(--_p,0)/var(--s)
+     100% no-repeat content-box,
+     #fff;
+     mix-blend-mode: darken;
+     filter: blur(calc(var(--s)/12))
+     contrast(11);
+     transition: .4s, 
+     background-position .4s .1s,
+     padding cubic-bezier(0,calc(var
+     (--_i,-1)*200),1,calc(var(--_i,
+     -1)*200)) .25s .1s;
+}
+
+.form-check-input:checked{
+    background-color: #85ff7a;
+}
+
+.form-check-input:checked:before{
+    padding: calc(var(--s)/10 + .05px)
+    calc(var(--s)/10);
+    --_p: 100%;
+    --_i: 1;
+}
+
+.btn {
+    margin-left: 10px;
+}
+
+.opt{
+    margin-left: 70px;
+}
+
+#question{
+    height: 100px;
+    width: 300px;
+    margin-left: 20px;
+}
+    </style>
+    <script>
+      let questions = [];
+
+      function addQuestion() {
+        let question = {
+          text: document.getElementById("question").value,
+          options: [
+            { text: document.getElementById("option1").value, correct: document.getElementById("answer1").checked },
+            { text: document.getElementById("option2").value, correct: document.getElementById("answer2").checked },
+            { text: document.getElementById("option3").value, correct: document.getElementById("answer3").checked },
+            { text: document.getElementById("option4").value, correct: document.getElementById("answer4").checked },
+          ]
+        };
+        questions.push(question);
+        clearInputs();
+      }
+
+      function clearInputs() {
+        document.getElementById("question").value = "";
+        document.getElementById("option1").value = "";
+        document.getElementById("option2").value = "";
+        document.getElementById("option3").value = "";
+        document.getElementById("option4").value = "";
+        document.getElementById("answer1").checked = false;
+        document.getElementById("answer2").checked = false;
+        document.getElementById("answer3").checked = false;
+        document.getElementById("answer4").checked = false;
+      }
+
+      function displayQuestions() {
+        let display = document.getElementById("display");
+        display.innerHTML = "";
+        for (let i = 0; i < questions.length; i++) {
+          let question = questions[i];
+          display.innerHTML += "<h3>" + question.text + "</h3><ul class='list-group'>";
+          for (let j = 0; j < question.options.length; j++) {
+            let option = question.options[j];
+            display.innerHTML += "<li class='list-group-item'>" + option.text;
+            if (option.correct) {
+              display.innerHTML += " <span class='badge badge-success'>Correct</span>";
+            }
+            display.innerHTML += "</li>";
+            }
+          display.innerHTML += "</ul>";
+        }
+      }
+
+      function addOption(option) {
+        var optionHTML = `
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox${optionCounter}" value="option${optionCounter}" ${option.correct ? 'checked' : ''}>
+                    <label class="form-check-label" for="inlineCheckbox${optionCounter}">${option.text}</label>
+                </div>
+                <button type="button" class="btn btn-danger delete-answer bi-trash">Remove</button>
+            </div>
+        `;
+        $('#options').append(optionHTML);
+    }
+    $(document).on('click', '.delete-answer', function () {
+        $(this).closest('.form-group').remove();
+    });
+    </script>
+  </head>
+  <body>
+    <!--
+    <div class="container mt-5">
+      <h1 class="text-center mb-5">Question Editor and Visualizer</h1>
+    -->
+    <div class ="container-fluid">
+        <div class="row">
+            <div class="col-md-6" style=" border : 2px solid #000000; background-color: rgb(108, 141, 233);">
+                <h2 class="text-center mt-5"> Editeur de questions</h2>
+                <div class="form-group">
+                    <label for="question" style="margin-left: 20px;">Question:</label>
+                    <input type="text" class="form-control" id="question">
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="answer1">
+                        <label class="form-check-label" for="answer1"></label>
+                    
+                        <label for="option1" class="opt">Option 1:</label>
+                        <button type="button" class="btn btn-danger delete-answer bi-trash">Remove</button> <br><br>
+                        <input type="text" class="form-control" id="option1" placeholder="Entrez votre option...">
+                    </div>    
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="answer2">
+                        <label class="form-check-label" for="answer2"></label>
+
+                    <label for="option2" class="opt">Option 2:</label>
+                    <button type="button" class="btn btn-danger delete-answer bi-trash">Remove</button> <br><br>
+                    <input type="text" class="form-control" id="option2" placeholder="Entrez votre option...">
+                   
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="answer3">
+                        <label class="form-check-label" for="answer3"></label>
+                    <label for="option3" class="opt">Option 3:</label>
+                    <button type="button" class="btn btn-danger delete-answer bi-trash">Remove</button> <br><br>
+                    <input type="text" class="form-control" id="option3" placeholder="Entrez votre option...">
+                    
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="answer4">
+                        <label class="form-check-label" for="answer4"></label>
+                    <label for="option4" class="opt">Option 4:</label>
+                    <button type="button" class="btn btn-danger delete-answer bi-trash">Remove</button> <br><br>
+                    <input type="text" class="form-control" id="option4" placeholder="Entrez votre option...">
+                 
+                    </div>
+                </div>
+      <!--<div class="text-center">-->
+                <button type="button" class="btn btn-primary mr-2" onclick="addQuestion()">Add Question</button>
+                <button type="button" class="btn btn-secondary" onclick="displayQuestions()">Display Questions</button>
+                <button type="button" class="btn btn-primary mr-2" onclick="addOption()">Add Options</button>
+                <br/>
+                <br>
+            </div>
+            <div class="col-md-6" style=" border : 2px solid #000000; background-color: rgb(90, 202, 174);">
+                <h2 class="text-center mt-5">Visualisateur</h2>
+                <div id="display"></div>
+                <div id="frame_div" style="display:none;">
+                    <a href="javascript:apercuSite();">Fermer l'aperçu</a>
+                    <iframe id="frame" src=""></iframe>
+                </div>
+                <a href="javascript:apercuSite('index2.html');">ui</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

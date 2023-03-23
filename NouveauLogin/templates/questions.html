@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Création de questions</title>
+    <style>
+        body {
+            background-color: #f1f1f1;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        }
+
+        button[type="submit"] {
+            width: 300px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        button[type="submit"]:focus {
+            outline: none;
+        }
+
+        #revenir{
+            background-color: #97b643;
+            font-weight: bold;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Création de questions</h1>
+    <form method="POST">
+        <label for="question">Question :</label>
+        <input type="text" name="question" required>
+        <label for="options">Options de réponse :</label>
+        <input type="text" name="options" required>
+        <input type="text" name="options" required>
+        <input type="text" name="options" required>
+        <button type="submit">Ajouter une question</button>
+        <br>
+        <button id = "revenir"><a href="{{ url_for('index') }}">Revenir au menu</a></button>
+    </form>
+</body>
+</html>

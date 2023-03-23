@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <textarea id="input"></textarea>
+ 
+  <div id="preview"></div>
+  <div id="output"></div>
+  <div id="error-message"></div>
+  <script src="https://cdn.rawgit.com/knsv/mermaid/0.5.8/dist/mermaidAPI.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/mermaid@8.4.8/dist/mermaid.css">
+    <script src="https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js"></script>
+  <button id="render" onclick="render()">Render</button>
+  <div id="editor-container">
+      
+    <textarea id="textarea"></textarea>
+  </div>
+  <div id="graphContainer"></div>
+  
+
+    <div id="output"></div>
+    
+  </div>
+  <style>
+      /* General styles for the graph container */
+#theGraph {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Styles for the arrows */
+  path.path {
+    stroke: #000000; /* color of the arrow */
+    stroke-width: 2px; /* width of the arrow */
+  }
+  
+  /* Styles for the nodes (rectangles) */
+  .node rect {
+    fill: #ffffff; /* background color of the node */
+    stroke: #000000; /* color of the node's border */
+    stroke-width: 1px; /* width of the node's border */
+  }
+  
+  /* Styles for the node labels */
+  .label {
+    font-family: Arial, sans-serif; /* font for the label */
+    font-size: 14px; /* size of the label's font */
+    fill: #000000; /* color of the label's text */
+  }
+  #editor-container {
+    width: 50%;
+    float: left;
+  }
+  #preview-container {
+    width: 50%;
+    float: right;
+  }
+  
+  </style>
+  <script>
+
+    //merkdown
+    var markdownTextarea = document.getElementById("textarea");
+    var htmlOutput = document.getElementById("output");
+
+    var converter = new showdown.Converter();
+    
+    markdownTextarea.addEventListener("input", function() {
+    var markdown = markdownTextarea.value;
+    //makeHtml : qui convertit le code markdown en code html pour l'affichage dans une page web
+    var html = converter.makeHtml(markdown);
+    ////innerHTML :fonction du DOM utilisé pour récupérer le contenu d'un élément sous forme de chaîne de code HTML.
+    htmlOutput.innerHTML = html;
+    });
+
+   //mermaid
+    var input = document.getElementById("input");
+    var preview = document.getElementById("preview");
+    var output = document.getElementById("output");
+    var errorMessage = document.getElementById("error-message");
+
+    mermaidAPI.initialize({startOnLoad: false});
+
+    function render() {
+        var code = input.value;
+        var startTag = "```mermaid";
+        var endTag = "```";
+        var startIndex = code.indexOf(startTag);
+        var endIndex = code.indexOf(endTag, startIndex + startTag.length);
+        if (startIndex !== -1 && endIndex !== -1) {
+            var mermaidCode = code.substring(startIndex + startTag.length, endIndex);
+            console.log("Extracted code: ", mermaidCode);
+            try {
+                preview.innerHTML = mermaidCode;
+                // Render the Mermaid graph
+                //La fonction "render" de Mermaid API est utilisée pour afficher un diagramme dans la page web en fonction du code de diagramme spécifié.
+                mermaidAPI.render('theGraph', mermaidCode, function(svgCode) {
+                    console.log("Rendered code: ", svgCode);
+                    output.innerHTML = svgCode;
+                });
+                errorMessage.innerHTML = "";
+                } catch (err) {
+                    errorMessage.innerHTML = "Error: " + err.message;
+                    console.log("Error: ", err);
+                }} else {
+                    errorMessage.innerHTML = "Error: Invalid Mermaid code.";
+                    console.log("Error: Invalid Mermaid code.");
+                }
+            }
+    </script>
+
+</body>
+</html>

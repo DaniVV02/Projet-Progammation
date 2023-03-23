@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<script> 
+	const signUpButton = document.getElementById('signUp');
+	const signInButton = document.getElementById('signIn');
+	const container = document.getElementById('container');
+
+	signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+	});
+
+	signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+	});
+
+</script>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="design">
+            <div class="pill-1 rotate-45"></div>
+            <div class="pill-2 rotate-45"></div>
+            <div class="pill-3 rotate-45"></div>
+            <div class="pill-4 rotate-45"></div>
+        </div>
+        <div class="login">
+        	{% with messages = get_flashed_messages() %}
+		   {% if messages %}
+		   	<div style="color:#00FF00">  
+			      {% for message in messages %}
+			         {{ message }}
+			      {% endfor %}
+		      	</div>
+			   {% endif %}
+			{% endwith %}
+			{% if alert %}
+			<div style="color:#FF0000">
+				{{ alert }}
+			</div>
+		{% endif %}
+            <h2>Welcome</h3>
+			<div class="container" id ="container">
+				<div class="form-container sign-in-container">
+            		<form method="post" action="#">
+				
+						<h1>Create Account</h1>
+
+						<input type="text" placeholder="Name" />
+						<input placeholder="Email" type="text" id="email" name="email">
+						<input placeholder="Mot de passe" type="password" id="password" name="password">
+						
+						<button>Sign Up</button>
+					</form>
+
+				</div>
+		   
+		   
+		        </br> Se souvenir de moi :  <input placeholder="Se souvenir de moi" type="checkbox" id="remember" name="remember"> </br>
+		   
+				<div class="form-container sign-in-container">
+					<form method="post">
+						<h1>Sign in</h1>
+						<input placeholder="Email" type="text" id="email" name="email">
+						<input placeholder="Mot de passe" type="password" id="password" name="password">
+						<span class="radio">
+							<input type="radio" name="usertype" value="professeur" />professeur</span>
+						<span class="radio">
+							<input type="radio" name="usertype" value="etudiant" />etudiant</span>
+						<a href="#">Forgot your password?</a>
+						<button type="submit" class="login-btn">Se connecter</button> </br>
+						</form>
+					</div>
+		    <div class="overlay-container">
+				<div class="overlay">
+					<div class="overlay-panel overlay-left">
+						<h1>Welcome Back!</h1>
+						<p>If you have already an account</p>
+						<button class="ghost" id="signIn">Sign In</button>
+					</div>
+					<div class="overlay-panel overlay-right">
+						<h1>Hello, Friend!</h1>
+						<p>If you don't have an account yet</p>
+
+						<button class="ghost" id="signUp"><a href="/signup" class="forgot" id="signUp">Sign Up</a></button>
+					</div>
+				</div>
+			</div>
+
+						<!--<a href="/signup" class="ghost">Vous n’avez pas de compte ?</a> class= "forgot"-->
+		    <!--<div class="create">-->
+		</div>
+		<footer>
+			<p>
+				Created <i class="fa fa-heart"></i> by Anas, Nina, Daniel, Nayef.
+			</p>
+        
+    
+</footer>
+</body>
+
+</html>
