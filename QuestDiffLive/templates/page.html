@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Page protégée par code d'accès</title>
+</head>
+<body>
+  <h1>Page protégée par code d'accès</h1>
+  <form onsubmit="checkAccessCode(event)">
+    <label for="access-code">Saisissez le code d'accès :</label>
+    <input type="text" id="access-code" name="access_code">
+    <button type="submit">Accéder à la page</button>
+  </form>
+
+  <script>
+    function checkAccessCode(event) {
+      event.preventDefault();
+      const urlParams = new URLSearchParams(window.location.search);
+      const accessCode = urlParams.get('access_code');
+      const inputCode = document.getElementById('access-code').value;
+      if (inputCode === accessCode) {
+        window.location.href = 'diffusion.html';
+      } else {
+        alert('Code d\'accès invalide!');
+      }
+    }
+  </script>
+</body>
+</html>

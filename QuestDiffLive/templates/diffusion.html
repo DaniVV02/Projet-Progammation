@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diffusion de questions</title>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+     integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" 
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!-- BOOTSRAP -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+    <style>
+        /* Centrer les titres */
+        h1, h2 {
+            text-align: center;
+        }
+
+        /* Ajouter une marge en haut et en bas pour chaque question */
+        h2 {
+            margin: 20px 0;
+        }
+
+        /* Styliser les options de réponse */
+        input[type=radio] {
+            margin-right: 10px;
+        }
+
+        /* Centrer le bouton de soumission */
+        button[type=submit] {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Diffusion de questions</h1>
+        <form method="POST" action="{{ url_for('reponses') }}" id="quiz-form">
+            {% for question in questions %}
+            <h2>{{ question['question'] }}</h2>
+            {% for option in question['options'] %}
+            <div class="form-check">
+                
+                <input class="form-check-input" type="radio" name="{{ option }}" value="{{ option }}" id="{{ option }}" required>
+                <label class="form-check-label" for="{{ option }}">{{ option }}</label>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            <p id="connected">Connected: 0</p>
+            <p id="answer-count"></p>
+            <p id="results">Results:</p>
+
+    
+            <button type="submit" class="btn btn-primary">Soumettre les réponses</button>
+        </form>
+    </div>
+    <script>
+        var socket = io();
+        var connected = document.getElementById('connected');
+        var results = document.getElementById('results');
+        var quizForm = document.getElementById('quiz-form');
+  
+        socket.on('connect', function() {
+          console.log('Connected');
+          socket.emit('connected');
+        });
+      
+        socket.on('disconnect', function() {
+          console.log('Disconnected');
+        });
+      
+        socket.on('connected_users', function(count) {
+          console.log('Connected users:', count);
+          connected.textContent = 'Connected: ' + count;
+        });
+  
+        socket.on('quiz_results', function(resultsData) {
+          console.log('Quiz results:', resultsData);
+          var totalAnswers = 0;
+          for (var answer in resultsData) {
+              totalAnswers += resultsData[answer];
+          }
+          var html = '';
+          var options = quizForm.elements['option'];
+          for (var i = 0; i < options.length; i++) {
+              var option = options[i];
+              var answer = option.value;
+              var count = resultsData[answer] || 0;
+              //Configuration de la arre de progres
+              var progress = totalAnswers > 0 ? Math.round((count / totalAnswers) * 100) : 0;
+              html += '<p>' + 'Option' + answer + ': ' + count + '</p>' +
+                      '<div class="progress">' +
+                      '<div class="progress-bar" role="progressbar" style="width: ' + progress + '%" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100"></div>' +
+                      '</div>';
+          }
+          results.innerHTML = '<h2>Results:</h2>' + html;
+          updateAnswerCount(Object.values(resultsData).reduce((acc, val) => acc + val, 0));
+          });
+      
+        quizForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          var selectedOption = quizForm.querySelector('input[name="option"]:checked');
+          if (selectedOption) {
+            var answer = selectedOption.value;
+            quizForm.reset();
+            socket.emit('quiz_answer', answer);
+          }
+        });
+  
+        function updateAnswerCount(count) {
+          var answerCount = document.getElementById('answer-count');
+          answerCount.textContent = count + ' reponses';
+        }
+  
+        // BARRE PROGRES
+  
+        function updateQuestion(question) {
+          questionNumber.textContent = 'Question ' + question.number;
+          questionText.textContent = question.text;
+          options.innerHTML = '';
+  
+          for (var i = 0; i < question.options.length; i++) {
+            var option = question.options[i];
+            var optionLabel = document.createElement('label');
+            optionLabel.classList.add('option-label');
+  
+            var optionInput = document.createElement('input');
+            optionInput.type = 'radio';
+            optionInput.name = 'option';
+            optionInput.value = option;
+            optionInput.classList.add('option-input');
+            optionLabel.appendChild(optionInput);
+  
+            var optionText = document.createTextNode(option);
+            optionLabel.appendChild(optionText);
+  
+            var progressBar = document.createElement('div');
+            progressBar.classList.add('progress');
+            progressBar.classList.add('my-3');
+            progressBar.classList.add('option-progress');
+            var progressBarFill = document.createElement('div');
+            progressBarFill.classList.add('progress-bar');
+            progressBarFill.style.width = '0%';
+            progressBar.appendChild(progressBarFill);
+            optionLabel.appendChild(progressBar);
+  
+            options.appendChild(optionLabel);
+          }
+        }
+  
+  
+        </script>
+</body>
+</html>
