@@ -13,6 +13,22 @@ Bibliothèque mermaid : **Mermaid API**
 - Sources : https://mermaid.js.org/config/usage.html 
 - https://github.com/mermaid-js/mermaid/issues/32 
 
+## Installation
+
+```bash
+pip install flask
+pip install flask_socketio
+```
+
+Run the program using 
+```bash
+python3 -m venv venv
+source venv/bin/activate
+#apres avoir instaler tout on pourra executer
+
+python3 app.py 
+```
+
 Sources d'inspiration:
 - Wikipedia
 - Github
