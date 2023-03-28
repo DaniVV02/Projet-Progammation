@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des tags</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Gestion des tags</h1>
+
+    <h2>Ajouter un tag</h2>
+    <form action="{{ url_for('add_tag') }}" method="POST">
+        <label for="addTag">Nom du tag :</label>
+        <input type="text" id="addTag" name="addTag">
+        <button type="submit">Ajouter</button>
+    </form>
+
+    {% if new_tag %}
+        <p>Nouveau tag ajouté : ID={{ new_tag[0] }}, nom={{ new_tag[1] }}</p>
+    {% endif %}
+
+    <h2>Liste des tags</h2>
+    <ul>
+        {% for tag in tags %}
+            <li id="tag-{{ tag[0] }}">ID={{ tag[0] }}, nom={{ tag[1] }} <button onclick="deleteTag({{ tag[0] }})">Supprimer</button></li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('question_list') }}"><button>Accéder à la page des questions</button></a>
+
+    <script>
+        function deleteTag(tagId) {
+            fetch('/delete_tag/' + tagId, {
+                method: 'POST'
+            })
+            .then(response => {
+                const tagElement = document.getElementById('tag-' + tagId);
+                if (tagElement) {
+                    tagElement.remove();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+    </script>
+</body>
+</html>
