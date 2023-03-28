@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Question ouverte</title>
+  </head>
+  <body>
+    <form method="POST" action="{{ url_for('question') }}">
+      <label for="reponse">Réponse :</label><br>
+      <textarea id="reponse" name="reponse" rows="4" cols="50"></textarea><br>
+      <input type="submit" value="Soumettre">
+    </form>
+  </body>
+</html>

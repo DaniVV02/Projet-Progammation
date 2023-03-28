@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accueil</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+    
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+    
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        button[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+    </style>
+    </head>
+<body>
+    <div class="form-container">
+        <h1>Qui êtes-vous ?</h1>
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label>
+                    <input type="radio" name="user_type" value="student">
+                    Étudiant
+                </label>
+                <label>
+                    <input type="radio" name="user_type" value="professor">
+                    Professeur
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Continuer</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+

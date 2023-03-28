@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Répondre à une question</title>
+</head>
+<body>
+	<h1>Répondre à la question :</h1>
+	<p>{{ question }}</p>
+	<!-- <form method="POST" action="/student/question/{{ question_index }}"> -->
+       
+    <form method="POST" action="/student/question/0"> 
+
+		<label for="reponse">Réponse :</label>
+		<textarea id="reponse" name="reponse" rows="4" cols="50"></textarea><br>
+      <input type="submit" value="Soumettre">
+	</form>
+</body>
+</html>

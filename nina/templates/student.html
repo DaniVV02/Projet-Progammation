@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page des étudiants</title>
+</head>
+<body>
+	<h1>Page des étudiants</h1>
+	{% if questions %}
+		{% for index, question in enumerate(questions) %}
+			<p>{{ index + 1 }}. <a href="/student/question/{{ index }}">{{ question }}</a></p>
+		{% endfor %}
+	{% else %}
+		<p>Aucune question n'a été créée pour l'instant.</p>
+	{% endif %}
+</body>
+</html>
