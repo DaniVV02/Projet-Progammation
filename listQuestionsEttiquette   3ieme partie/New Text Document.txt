@@ -1,0 +1,61 @@
+CREATE TABLE qcm (
+    id_qcm INTEGER PRIMARY KEY,
+    etiquette TEXT NOT NULL,
+    question TEXT NOT NULL,
+    choix_1 TEXT NOT NULL,
+    choix_2 TEXT NOT NULL,
+    choix_3 TEXT NOT NULL,
+    choix_4 TEXT NOT NULL,
+    reponse TEXT NOT NULL
+);
+INSERT INTO qcm (id_qcm,etiquette, question, choix_1, choix_2, choix_3, choix_4, reponse) 
+VALUES 
+(1,'JAVA', 'Quel est le mot clé pour définir une classe en Java ?', 'class', 'def', 'function', 'void', 'class'),
+(2, 'JAVA', 'Quel est le mot clé pour définir une méthode en Java ?', 'method', 'function', 'def', 'void', 'method'),
+(3, 'JAVA', 'Quel est le type de données primitif pour les nombres entiers en Java ?', 'int', 'float', 'double', 'long', 'int'),
+(4, 'JAVA', 'Comment appelle-t-on une variable qui ne peut pas être modifiée en Java ?', 'final', 'const', 'readonly', 'static', 'final'),
+(5, 'JAVA', 'Quel est le mot clé pour hériter d''une classe en Java ?', 'extends', 'inherits', 'super', 'this', 'extends'),
+(6,'JAVA',  'Quelle est la méthode utilisée pour afficher du texte dans la console en Java ?', 'print()', 'console.log()', 'echo()', 'writeln()', 'print()'),
+(7, 'JAVA', 'Quel est le nom de la méthode appelée automatiquement lorsqu''un objet est créé en Java ?', 'constructor()', 'main()', 'start()', 'run()', 'constructor()');
+
+
+
+
+
+INSERT INTO qcm (id_qcm,etiquette, question, choix_1, choix_2, choix_3, choix_4, reponse)
+VALUES
+(8, 'compilation', 'Quel est le mot clé pour définir une classe en Java ?', 'class', 'def', 'function', 'void', 'class'),
+(9, 'compilation','Quel est le mot clé pour définir une méthode en Java ?', 'method', 'function', 'def', 'void', 'method'),
+(10, 'compilation','Quel est le type de données primitif pour les nombres entiers en Java ?', 'int', 'float', 'double', 'long', 'int'),
+(11, 'compilation','Comment appelle-t-on une variable qui ne peut pas être modifiée en Java ?', 'final', 'const', 'readonly', 'static', 'final'),
+(12, 'compilation','Quel est le mot clé pour hériter d''une classe en Java ?', 'extends', 'inherits', 'super', 'this', 'extends'),
+(13, 'compilation','Quelle est la méthode utilisée pour afficher du texte dans la console en Java ?', 'print()', 'console.log()', 'echo()', 'writeln()', 'print()'),
+(14, 'compilation','Quel est le nom de la méthode appelée automatiquement lorsqu''un objet est créé en Java ?', 'constructor()', 'main()', 'start()', 'run()', 'constructor()'),
+(15,'compilation', 'Quel est le mot clé pour déclarer une variable en JavaScript ?', 'var', 'let', 'const', 'int', 'var'),
+(16, 'compilation','Quel est le résultat de l''opération "5" + 2 en JavaScript ?', '52', '7', 'NaN', 'Undefined', '52'),
+(17, 'compilation','Comment déclare-t-on une fonction en JavaScript ?', 'function myFunction() {}', 'def myFunction() {}', 'myFunction() {}', 'let myFunction = function() {}', 'function myFunction() {}');
+
+
+INSERT INTO qcm (id_qcm,etiquette, question, choix_1, choix_2, choix_3, choix_4, reponse) 
+VALUES 
+(19, 'PHP','Quel est le mot clé pour définir une variable en PHP ?', 'var', 'let', '$', '#', '$'),
+(20, 'PHP', 'Quel est le mot clé pour inclure un fichier en PHP ?', 'include', 'require', 'import', 'load', 'include'),
+(21, 'PHP','Quelle fonction permet de récupérer la longueur d une chaîne de caractères en PHP ?', 'strlen()', 'length()', 'count()', 'size()', 'strlen()'),
+(22, 'PHP','Quel est le type de données pour les tableaux en PHP ?', 'array', 'list', 'set', 'map', 'array'),
+(23, 'PHP','Quelle fonction permet de transformer une chaîne de caractères en minuscules en PHP ?', 'strtolower()', 'toLower()', 'lowercase()', 'caseLower()', 'strtolower()');
+
+
+
+
+
+
+
+INSERT INTO qcm (id_qcm, etiquette, question, choix_1, choix_2, choix_3, choix_4, reponse) 
+VALUES 
+(24, 'Python', 'Quelle est la fonction utilisée pour afficher du texte dans la console ?', 'print', 'input', 'read', 'write', 'print'),
+(25, 'Python', 'Comment déclare-t-on une variable en Python ?', 'nom_de_variable = valeur', 'variable nom_de_variable = valeur', 'var nom_de_variable = valeur', 'val nom_de_variable = valeur', 'nom_de_variable = valeur'),
+(26, 'Python', 'Quelle est la méthode utilisée pour obtenir la longueur d une liste en Python ?', 'len()', 'length()', 'count()', 'size()', 'len()'),
+(27, 'Python', 'Comment définit-on une fonction en Python ?', 'def ma_fonction():', 'function ma_fonction():', 'ma_fonction():', 'fonction ma_fonction():', 'def ma_fonction():'),
+(28, 'Python', 'Quelle est la méthode utilisée pour ajouter un élément à une liste en Python ?', 'append()', 'add()', 'insert()', 'update()', 'append()'),
+(29, 'Python', 'Comment utilise-t-on une boucle "for" en Python ?', 'for element in ma_liste:', 'for element of ma_liste:', 'for element from ma_liste:', 'for each element in ma_liste:', 'for element in ma_liste:'),
+(30, 'Python', 'Quelle est la méthode utilisée pour convertir une chaîne de caractères en majuscules en Python ?', 'upper()', 'toUpper()', 'uppercase()', 'caseUpper()', 'upper()');
