@@ -43,3 +43,9 @@ Liste de tout ce qu’on n'a pas fait :
 - Fonction mermaid qui n’est pas au point (on a encore des erreurs)
 - Sauvegarder les options et réponses de la question dans un fichier
 - Connecter le markdown,mermaid et latex avec la saisie du texte pour la création des questions
+
+Liens des sites web utilisés :
+- SOCKET CONFIG : https://socket.io/docs/v4/client-installation/
+- BOOTSTRAP : https://mdbootstrap.com/docs/standard/extended/textarea/
+- BOOTSTRAP (barre de progrès) : https://www.w3schools.com/bootstrap/bootstrap_progressbars.asp
+- 
