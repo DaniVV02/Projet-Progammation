@@ -1,16 +1,18 @@
 import json
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, send_file, url_for, flash
 from flask_socketio import SocketIO, emit
 import random
 import string
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
+import io
+
 
 app = Flask(__name__)
 socketio = SocketIO(app)
-
+app.jinja_env.globals.update(enumerate=enumerate)
 connected_users = set()
 quiz_results = {}
-
-app.jinja_env.globals.update(enumerate=enumerate)
 
 # Initialisation de la liste des questions et réponses
 questions = []
@@ -37,39 +39,60 @@ def login():
 def student():
     return render_template('student.html', questions=questions)
 
-# Page pour répondre à une question spécifique
-# @app.route('/student/question/<int:question_index>', methods=['GET', 'POST'])
-# def answer_question(question_index):
-#     if request.method == 'POST':
-#         answer = request.form['answer']
-#         with open(f'answers_{question_index}.txt', 'a') as f:
-#             f.write(answer + '\n')
-#         return redirect('/')  
-#     question = questions[question_index]
-#     return render_template('answer_question.html', question=question)
 
-#page pour que letudiant repond et conserve les reponses dans un fichier  json 
+
+def normalize_answer(answer):
+    # Convertir la réponse en minuscules
+    answer = answer.lower()
+    # Supprimer les espaces inutiles
+    answer = answer.strip()
+    return answer
+
+def compare_answers(answer, expected_answers):
+    for expected_answer in expected_answers:
+        # Normaliser la réponse attendue
+        expected_answer = normalize_answer(expected_answer)
+        # Calculer le score de similarité entre la réponse de l'étudiant et la réponse attendue
+        ratio = fuzz.token_set_ratio(answer, expected_answer)
+        # Si le score est supérieur à 75%, considérer la réponse comme valide
+        if ratio >= 75:
+            return True
+    return False
+
+#page pour que l'étudiant réponde et conserve les réponses dans un fichier json 
+# Page pour que l'étudiant réponde et conserve les réponses dans un fichier JSON
 @app.route('/student/question/<int:question_index>', methods=['GET', 'POST'])
 def answer_question(question_index):
     if request.method == 'POST':
         answer = request.form['reponse']
-        objet_= {
-            'answer1' : None 
-        }
-        with open('./base_question.json', 'r') as f:
-            data = json.load(f) 
-            with open('./base_question.json','w') as file:
-                objet_['answer1'] = answer 
-                data["answer"] = objet_        
-                json.dump(data,file,indent=4)            
-        with open('./base_question.json', 'r') as f:
+        # Normaliser la réponse
+        answer = normalize_answer(answer)
+        with open('./reponses.json', 'r') as f:
             data = json.load(f)
-            
-            reponses.append(data["answer"]["answer1"])
-            
-        return render_template('/reponses.html',reponses=reponses)  
+        data.setdefault('reponses', []).append(answer)
+        with open('./reponses.json', 'w') as f:
+            json.dump(data, f, indent=4)
+        return redirect(url_for('reponses'))
+
     question = questions[question_index]
     return render_template('answer_question.html', question=question)
+
+
+# Route pour afficher les réponses des étudiants sous forme de nuage de mots
+@app.route('/reponses')
+def reponses():
+    with open('./reponses.json', 'r') as f:
+        data = json.load(f)
+        reponses = data.get("reponses", [])
+    text_str = ' '.join(reponses)
+    wordcloud = WordCloud(width=800, height=800, background_color='white', stopwords=set(STOPWORDS), min_font_size=10).generate(text_str)
+
+    # Enregistrer le nuage de mots dans un fichier image
+    wordcloud.to_file("static/img/wordcloud.png")
+    
+    # Afficher le nuage de mots dans la page HTML
+    return render_template('reponses.html', reponses=reponses)
+
 
 @app.route('/teacher')
 def teacher():
@@ -96,4 +119,5 @@ def create_question():
     return render_template('create_question.html')
 
 if __name__ == '__main__':
+    # Créer le fichier de stock
     app.run(debug=True)
