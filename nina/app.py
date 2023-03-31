@@ -7,6 +7,9 @@ from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import io
 
+from spellchecker import SpellChecker
+
+spell = SpellChecker()
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -17,6 +20,7 @@ quiz_results = {}
 # Initialisation de la liste des questions et réponses
 questions = []
 reponses = []
+
 
 # Page d'accueil pour le quiz
 @app.route('/')
@@ -40,13 +44,14 @@ def student():
     return render_template('student.html', questions=questions)
 
 
-
 def normalize_answer(answer):
     # Convertir la réponse en minuscules
     answer = answer.lower()
     # Supprimer les espaces inutiles
     answer = answer.strip()
-    return answer
+    #corriger le mot
+    corrected_word = spell.correction(answer)
+    return corrected_word
 
 def compare_answers(answer, expected_answers):
     for expected_answer in expected_answers:
@@ -60,7 +65,6 @@ def compare_answers(answer, expected_answers):
     return False
 
 #page pour que l'étudiant réponde et conserve les réponses dans un fichier json 
-# Page pour que l'étudiant réponde et conserve les réponses dans un fichier JSON
 @app.route('/student/question/<int:question_index>', methods=['GET', 'POST'])
 def answer_question(question_index):
     if request.method == 'POST':
@@ -104,10 +108,17 @@ def ask_questions():
     if request.method == 'POST':
         question = request.form['question']
         options = request.form.getlist('options')
-        questions.append({'question': question, 'options': options})
+        with open('./questions.json', 'r') as f:
+            data = json.load(f)
+            data.setdefault('questions', []).append({'question': question, 'options': options})
+        with open('./questions.json', 'w') as f:
+            json.dump(data, f, indent=4)
+
         return redirect(url_for('ask_questions'))
 
     return render_template('questions.html')
+
+        
 
 # Page pour créer une question en tant que professeur
 @app.route('/teacher/create', methods=['GET', 'POST'])
@@ -118,6 +129,13 @@ def create_question():
         return redirect('/')
     return render_template('create_question.html')
 
+@app.route('/nuage')
+def nuage():
+    render_template('/wordcloud.html')
+    
+        
+    
+
 if __name__ == '__main__':
-    # Créer le fichier de stock
     app.run(debug=True)
+
