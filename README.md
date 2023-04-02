@@ -19,6 +19,9 @@ Bibliothèque mermaid : **Mermaid API**
 pip install flask
 pip install flask_socketio
 pip install sqlite3
+pip install wordcloud (il faut avoir une version de python inférieure à 3.7)
+pip install indexer
+pip install spellchecker
 ```
 
 Run the program using 
@@ -33,13 +36,13 @@ python3 app.py
 Sources d'inspiration:
 - Wikipedia
 - Github
+- ChatGPT
 - W3schools: https://www.w3schools.com/html/
 - Grafikart : https://grafikart.fr/tutoriels/javascript
 - Mermaid: https://mermaid.js.org/config/usage.html
 - codePen:https://codepen.io/eniotna/pen/
 - MathJax https://docs.mathjax.org/
--Python :https://pythonbasics.org/
-
+- Python :https://pythonbasics.org/
 
 
 Liste de tout ce qu’on n'a pas fait :
@@ -56,7 +59,7 @@ Liens des sites web utilisés :
 - JAVASCRIPT : https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 - JAVASCRIPT : https://www.youtube.com/watch?v=pgWcJygAk4s
 - FLASK : https://snyk.io/advisor/python/Flask/functions/flask.request.form.get
--NUAGES DE MOTS  :https://datascientest.com/wordcloud-python
+- NUAGES DE MOTS  :https://datascientest.com/wordcloud-python
 - jsPDF : https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js
           https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js
 
