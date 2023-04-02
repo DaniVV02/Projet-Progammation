@@ -48,4 +48,4 @@ Liens des sites web utilisés :
 - SOCKET CONFIG : https://socket.io/docs/v4/client-installation/
 - BOOTSTRAP : https://mdbootstrap.com/docs/standard/extended/textarea/
 - BOOTSTRAP (barre de progrès) : https://www.w3schools.com/bootstrap/bootstrap_progressbars.asp
-- 
+- JSON : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
