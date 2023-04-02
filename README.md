@@ -50,3 +50,4 @@ Liens des sites web utilisés :
 - BOOTSTRAP (barre de progrès) : https://www.w3schools.com/bootstrap/bootstrap_progressbars.asp
 - JSON : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 - JINJA : https://jinja.palletsprojects.com/en/3.1.x/templates/
+- JAVASCRIPT : https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
