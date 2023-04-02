@@ -18,6 +18,7 @@ Bibliothèque mermaid : **Mermaid API**
 ```bash
 pip install flask
 pip install flask_socketio
+pip install sqlite3
 ```
 
 Run the program using 
@@ -37,11 +38,13 @@ Sources d'inspiration:
 - Mermaid: https://mermaid.js.org/config/usage.html
 - codePen:https://codepen.io/eniotna/pen/
 - MathJax https://docs.mathjax.org/
+-Python :https://pythonbasics.org/
+
+
 
 Liste de tout ce qu’on n'a pas fait :
 - Fonction /coloration de code/ de manière dynamique
-- Fonction mermaid qui n’est pas au point (on a encore des erreurs)
-- Sauvegarder les options et réponses de la question dans un fichier
+- les sequences de questions
 - Connecter le markdown,mermaid et latex avec la saisie du texte pour la création des questions
 
 Liens des sites web utilisés :
@@ -53,3 +56,7 @@ Liens des sites web utilisés :
 - JAVASCRIPT : https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 - JAVASCRIPT : https://www.youtube.com/watch?v=pgWcJygAk4s
 - FLASK : https://snyk.io/advisor/python/Flask/functions/flask.request.form.get
+-NUAGES DE MOTS  :https://datascientest.com/wordcloud-python
+- jsPDF : https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js
+          https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js
+
