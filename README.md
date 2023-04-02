@@ -51,4 +51,5 @@ Liens des sites web utilisés :
 - JSON : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 - JINJA : https://jinja.palletsprojects.com/en/3.1.x/templates/
 - JAVASCRIPT : https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+- JAVASCRIPT : https://www.youtube.com/watch?v=pgWcJygAk4s
 - FLASK : https://snyk.io/advisor/python/Flask/functions/flask.request.form.get
