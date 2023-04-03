@@ -1,15 +1,15 @@
 # Projet-programmation-HAI405I
-Bibliothèque markdown: **showdown** convertir markdown syntaxe en html
+### Bibliothèque markdown: **showdown** convertir markdown syntaxe en html
 - source :https://github.com/showdownjs/showdown
 
-Bibliotheque latex:**mathJax** inclue des notions mathématiques sur la page
+### Bibliotheque latex:**mathJax** inclue des notions mathématiques sur la page
 - source : https://docs.mathjax.org/en/latest/web/start.html
 - source : src="https://www.tuhh.de/MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML">
 
-Bibliothèque coloration de code : **Highlight** met en évidence les éléments clés d'un code source en utilisant des couleurs ou des styles différents
+### Bibliothèque coloration de code : **Highlight** met en évidence les éléments clés d'un code source en utilisant des couleurs ou des styles différents
 - Source:https://highlightjs.org/download/ 
 
-Bibliothèque mermaid : **Mermaid API**
+### Bibliothèque mermaid : **Mermaid API**
 - Sources : https://mermaid.js.org/config/usage.html 
 - https://github.com/mermaid-js/mermaid/issues/32 
 
@@ -38,7 +38,7 @@ source venv/bin/activate
 python3 app.py 
 ```
 
-Sources d'inspiration:
+## Sources d'inspiration:
 - Wikipedia
 - Github
 - ChatGPT
@@ -50,12 +50,12 @@ Sources d'inspiration:
 - Python :https://pythonbasics.org/
 
 
-Liste de tout ce qu’on n'a pas fait :
+## Liste de tout ce qu’on n'a pas fait :
 - Fonction /coloration de code/ de manière dynamique
 - les sequences de questions
 - Connecter le markdown,mermaid et latex avec la saisie du texte pour la création des questions
 
-Liens des sites web utilisés :
+## Liens des sites web utilisés :
 - SOCKET CONFIG : https://socket.io/docs/v4/client-installation/
 - BOOTSTRAP : https://mdbootstrap.com/docs/standard/extended/textarea/
 - BOOTSTRAP (barre de progrès) : https://www.w3schools.com/bootstrap/bootstrap_progressbars.asp
