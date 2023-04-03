@@ -68,3 +68,19 @@ Liens des sites web utilisés :
 - jsPDF : https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js
           https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js
 
+## Génération de contrôles
+
+ ### Description
+
+La génération de contrôle est une application web qui permet de générer deux types de contrôle, anonyme ou identifié en sélectionnant le nombre de question pour chaque étiquette dans le contrôle .
+dans notre cas on a 4 étiquettes de question qui sont : JAVA ,compilation,PHP ,Python
+
+Fonctionnalités
+
+   - Ajouter/supprimer des étiquettes.
+   - Sélectionner le type de copie soit anonyme  soit identifié .
+   - Sélectionner le type de génération de question soit basique soit avancé .
+   - Sélectionner l’affichage des questions dans des contrôles soit à l’ordre des étiquette c’est-à-dire les   questions avec étiquette JAVA puis celles avec étiquette compila-tion puis celles de PHP et en fin Python ,soit de manière aléatoire 
+   - Imprimer des contrôles .
+
+
