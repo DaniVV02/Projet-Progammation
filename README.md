@@ -17,11 +17,16 @@ Bibliothèque mermaid : **Mermaid API**
 
 ```bash
 pip install flask
-pip install flask_socketio
+pip install flask-login
+pip install email-validator
+pip install pytz
+pip install flask-sqlalchemy
+pip install flask-socketio
 pip install sqlite3
 pip install wordcloud (il faut avoir une version de python inférieure à 3.7)
 pip install indexer
 pip install spellchecker
+
 ```
 
 Run the program using 
